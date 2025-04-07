@@ -1,7 +1,5 @@
 # uiiai README
 
-This is the UIIAI extension.
-
 ## Features
 
 This extension adds the viral spinning UIIAI Cat in a seperate View in the explorer.
