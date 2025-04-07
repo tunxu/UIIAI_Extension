@@ -12,12 +12,16 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "uiiai.helloWorld",
-        "title": "Hello World"
-      }
-    ]
+    "views": {
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "uiiai.view",
+          "name": "UIIAI Cat"
+        }
+      ]
+    },
+    "commands": []
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
