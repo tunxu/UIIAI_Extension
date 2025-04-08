@@ -54,19 +54,17 @@ class UIIAIViewProvider implements vscode.WebviewViewProvider {
       clearTimeout(this.typingTimeout);
     }
 
-    // If the current status is 'idle', change it to 'typing' and send the update
     if (this.currentStatus !== 'typing') {
       this._setImageInWebview(webviewView, 'typing');
       this.currentStatus = 'typing';  // Update current state to 'typing'
     }
 
-    // Set a timeout to switch back to 'idle' after a delay (e.g., 1 second after typing stops)
     this.typingTimeout = setTimeout(() => {
       if (this.currentStatus !== 'idle') {
         this._setImageInWebview(webviewView, 'idle');
-        this.currentStatus = 'idle';  // Update current state to 'idle'
+        this.currentStatus = 'idle';
       }
-    }, 200); // Adjust the timeout as needed
+    }, 200); 
   }
 	private _setImageInWebview(webviewView: vscode.WebviewView, status: 'typing' | 'idle') {
 		const imageUri = this._getImageUri(status);
@@ -115,44 +113,5 @@ class UIIAIViewProvider implements vscode.WebviewViewProvider {
 
 }
 
-class UIIAIViewProvider2 implements vscode.WebviewViewProvider {
-	public static readonly viewType = 'uiiai.view';
-
-	private _view?: vscode.WebviewView;
-
-	constructor(
-		private readonly _extensionUri: vscode.Uri,
-	) {}
-
-	public resolveWebviewView(webviewView: vscode.WebviewView, context: vscode.WebviewViewResolveContext, token: vscode.CancellationToken){
-		this._view = webviewView;
-		
-		webviewView.webview.options = {enableScripts: true, localResourceRoots: [this._extensionUri]};
-
-		webviewView.webview.html = this._getHtml()
-	}
-
-	private _getHtml(){
-		return `<!DOCTYPE html>
-			<html lang="en">
-			<head>
-				<meta charset="UTF-8">
-
-				<!--
-					Use a content security policy to only allow loading styles from our extension directory,
-					and only allow scripts that have a specific nonce.
-					(See the 'webview-sample' extension sample for img-src content security policy examples)
-				-->
-				<meta http-equiv="Content-Security-Policy">
-
-				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			</head>
-
-			<body>
-				<img src="https://media.tenor.com/sbfBfp3FeY8AAAAj/oia-uia.gif" >
-			</body>
-			</html>`;
-	}
-}
 // This method is called when your extension is deactivated
 export function deactivate() {}
